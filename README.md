@@ -1,4 +1,3 @@
-# Exthereum
 # Use Elixir to control all the Ethereum Things
 This library exists to present a convenient interface to control a full Ethereum node from Elixir, abstracting away the need to deal with the JSON-RPC API directly. It decodes the hex responses when necessary and functions return the idiomatic {:ok, data} | {:error, reason} tuples whenever possible. The goal is to cover the entire JSON-RPC API for Geth/Parity. This project has @specs for every function and is using Dialyzer + ExUnit.
 
