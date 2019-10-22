@@ -1,10 +1,10 @@
-defmodule Perkle.Eth do
+defmodule Ethereum.Eth do
   @moduledoc """
   Eth Namespace for Ethereum JSON-RPC
   RPC calls
   """
-  use Perkle.Transport
-  alias Perkle.Conversion
+  use Ethereum.Transport
+  alias Ethereum.Conversion
   require IEx
   require Logger
 
@@ -14,7 +14,7 @@ defmodule Perkle.Eth do
 
   ## Example:
 
-      Perkle.get_balance("0xfE8bf4ca8A6170E759E89EDB5cc9adec3e33493f")
+      Ethereum.get_balance("0xfE8bf4ca8A6170E759E89EDB5cc9adec3e33493f")
       {:ok, 0.4650075166583676}
   """
   @spec get_balance(String.t) :: {:ok, float} | {:error, String.t}
@@ -35,7 +35,7 @@ defmodule Perkle.Eth do
   
   ## Example:
   
-      iex> Perkle.get_block_by_number(43, false)
+      iex> Ethereum.get_block_by_number(43, false)
       {:ok,  %{"difficulty" => "0x40e990afb", ...}}
       
   """
@@ -56,7 +56,7 @@ defmodule Perkle.Eth do
 
   ## Example: 
    
-      iex> Perkle.get_block_by_hash("0xb8bbe729e16b9aa1b30c157c7d799ddb68814ae183cf6a1c9d3597916e54f50f")
+      iex> Ethereum.get_block_by_hash("0xb8bbe729e16b9aa1b30c157c7d799ddb68814ae183cf6a1c9d3597916e54f50f")
       {:ok, 
         %{
           "difficulty" => "0x4118100c961", 
@@ -82,7 +82,7 @@ defmodule Perkle.Eth do
   
   ## Example:   
 
-      iex> Perkle.protocol_version()
+      iex> Ethereum.protocol_version()
       {:ok, 63}
   
   """
@@ -103,7 +103,7 @@ defmodule Perkle.Eth do
   
   ## Example:
       
-      iex> Perkle.syncing()
+      iex> Ethereum.syncing()
       {:ok, false}
 
   """
@@ -123,7 +123,7 @@ defmodule Perkle.Eth do
 
   ## Example:
       
-      iex> Perkle.coinbase()
+      iex> Ethereum.coinbase()
       {:ok, false}
 
   """
@@ -143,7 +143,7 @@ defmodule Perkle.Eth do
 
   ## Example:
       
-      iex> Perkle.mining()
+      iex> Ethereum.mining()
       {:ok, true}
 
   """
@@ -165,7 +165,7 @@ defmodule Perkle.Eth do
 
   ## Example:
 
-      iex> Perkle.hashrate()
+      iex> Ethereum.hashrate()
       {:ok, "0"}
 
   """
@@ -185,7 +185,7 @@ defmodule Perkle.Eth do
 
   ## Example:
 
-      iex> Perkle.gas_price()
+      iex> Ethereum.gas_price()
       {:ok, 22061831512}
 
   """
@@ -207,7 +207,7 @@ defmodule Perkle.Eth do
 
   ## Example:
       
-      iex> Perkle.accounts()
+      iex> Ethereum.accounts()
       {:ok, ["0x78fc2b9b6cf9b18f91037a5e0e074a479be9dca1",
         "0x141feb71895530f537c847d62f039d9be895bd35",
         "0xe55c5bb9d42307e03fb4aa39ccb878c16f6f901e",
@@ -230,7 +230,7 @@ defmodule Perkle.Eth do
     
   ## Example:
 
-      iex> Perkle.block_number()
+      iex> Ethereum.block_number()
       {:ok, 3858216}
 
   """
@@ -254,7 +254,7 @@ defmodule Perkle.Eth do
   
   ## Example:
 
-      iex> Perkle.transaction_count("0xfE8bf4ca8A6170E759E89EDB5cc9adec3e33493f")
+      iex> Ethereum.transaction_count("0xfE8bf4ca8A6170E759E89EDB5cc9adec3e33493f")
       {:ok, 3858216}
 
   """
@@ -275,7 +275,7 @@ defmodule Perkle.Eth do
     
   ## Example:
 
-      iex> Perkle.get_transaction_by_hash("0xbbdea9b303ba7b605130ce0c2dd261893a086f7221511d7a31964c4aab70dca3")
+      iex> Ethereum.get_transaction_by_hash("0xbbdea9b303ba7b605130ce0c2dd261893a086f7221511d7a31964c4aab70dca3")
       {:ok, 3858216}
 
   """
@@ -295,7 +295,7 @@ defmodule Perkle.Eth do
     
   ## Example:
 
-      iex> Perkle.get_transaction_by_hash("0xbbdea9b303ba7b605130ce0c2dd261893a086f7221511d7a31964c4aab70dca3")
+      iex> Ethereum.get_transaction_by_hash("0xbbdea9b303ba7b605130ce0c2dd261893a086f7221511d7a31964c4aab70dca3")
       {:ok, 3858216}
 
   """
@@ -314,7 +314,7 @@ defmodule Perkle.Eth do
     
   ## Example:
 
-      iex> Perkle.uninstall_filter("0x")
+      iex> Ethereum.uninstall_filter("0x")
       {:ok, _}
 
   """
@@ -333,7 +333,7 @@ defmodule Perkle.Eth do
     
   ## Example:
 
-      iex> Perkle.uninstall_filter("0x")
+      iex> Ethereum.uninstall_filter("0x")
       {:ok, _}
 
   """
@@ -341,7 +341,7 @@ defmodule Perkle.Eth do
   def new_filter(map) do
     case __MODULE__.send("eth_newFilter",[map]) do
       {:ok, res} ->
-        Logger.warn "Perkle.Eth.new_filter" 
+        Logger.warn "Ethereum.Eth.new_filter" 
         IEx.pry
         {:ok, res}
       {:error, reason} ->
@@ -353,7 +353,7 @@ defmodule Perkle.Eth do
   Show transaction receipt for hash
     
   ## Example:
-      iex> Perkle.get_transaction_receipt_by_hash("0x6911ae06acd22106a21762af4ce3a8c93156358b6679ccc905ebfab1c34c6e63")
+      iex> Ethereum.get_transaction_receipt_by_hash("0x6911ae06acd22106a21762af4ce3a8c93156358b6679ccc905ebfab1c34c6e63")
       %{
         "blockHash" => "0x425f2820d6ec8ba444d825fb7548b21f2e9e6496a074b9038eca864218673eee",
         "blockNumber" => "0x3",
@@ -379,7 +379,7 @@ defmodule Perkle.Eth do
   """
   def eth_call(params) do
     [h | t] = params
-    case Perkle.Eth.send("eth_call", [h, "latest"], false) do
+    case Ethereum.Eth.send("eth_call", [h, "latest"], false) do
       {:ok, result} ->
         {:ok, result}
       {:error, reason} ->
@@ -391,7 +391,7 @@ defmodule Perkle.Eth do
   """
   def eth_send_transaction(params) do
     [h | t] = params
-    case Perkle.Eth.send("eth_sendTransaction", [h], false) do
+    case Ethereum.Eth.send("eth_sendTransaction", [h], false) do
       {:ok, result} ->
         {:ok, result}
       {:error, reason} ->
