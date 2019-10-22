@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-  config :exthereum, eth_server_url: "http://localhost:8545"
+  config :ethereum, ethereum_rpc_url: System.get_env("ETHEREUM_HOST")
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:exthereum, :key)
+#     Application.get_env(:ethereum, :ethereum_rpc_url)
 #
 # Or configure a 3rd-party app:
 #

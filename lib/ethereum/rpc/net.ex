@@ -1,11 +1,18 @@
-defmodule Exthereum.Net do
+defmodule Ethereum.Net do
   @moduledoc """
   Net Namespace for Ethereum JSON-RPC
   """
-  use Exthereum.Transport
+  use Ethereum.Transport
 
-  @eth_server_url Application.get_env(:exthereum, :eth_server_url)
+  @doc """
+  Show version of network
+      
+  ## Example:
 
+      iex> Ethereum.version()
+      {:ok, "1"}
+ 
+  """
   @spec version :: {:ok, float} | {:error, String.t}
   def version do
     case __MODULE__.send("net_version",[]) do
@@ -16,6 +23,15 @@ defmodule Exthereum.Net do
     end
   end
 
+  @doc """
+  Show network version identifier
+
+  ## Example:
+      
+      iex> Ethereum.peer_count
+      {:ok, "19"}
+
+  """
   @spec peer_count :: {:ok, integer} | {:error, String.t}
   def peer_count do
     case __MODULE__.send("net_peerCount",[]) do
@@ -28,6 +44,16 @@ defmodule Exthereum.Net do
     end
   end
 
+
+  @doc """
+  Display node listening status
+  
+  ## Example:
+      
+      iex> Ethereum.listening
+      {:ok, true}
+
+  """
   @spec listening :: {:ok, boolean} | {:error, String.t}
   def listening do
     case __MODULE__.send("net_listening",[]) do

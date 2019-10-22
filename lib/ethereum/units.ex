@@ -1,11 +1,11 @@
-defmodule Exthereum.Units do
+defmodule Ethereum.Units do
   @moduledoc """
-  Module for @Type that represents Exthereum.Unit struct with various ether denominations
+  Module for @Type that represents Ethereum.Unit struct with various ether denominations
 
   """
-  alias Exthereum.Units
+  alias Ethereum.Units
   @typedoc """
-    Type that represents Exthereum.Unit struct with various ether denominations
+    Type that represents Ethereum.Unit struct with various ether denominations
   """
   @type t :: %Units{
     "wei": integer,

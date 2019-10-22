@@ -1,8 +1,10 @@
-defmodule Exthereum.Conversion do
+defmodule Ethereum.Conversion do
   @moduledoc """
-  Various Wei/Eth Unit Conversion Functions
+  Various Wei/Ethereum Eth Style Unit Conversion Functions
   """
-alias Exthereum.Units
+  require IEx
+
+  alias Ethereum.Units
   @units %Units{}
 
   @spec wei_to_eth(integer) :: float
@@ -10,11 +12,11 @@ alias Exthereum.Units
     wei / @units.eth
   end
 
-  @spec to_wei(amount :: integer, denomination :: atom) :: integer
+  @spec to_wei(amount :: integer, denomination :: atom) :: integer()
   def to_wei(amount, denomination) do
     case denomination do
       :ether ->
-        @units.eth / amount
+        @units.eth * amount |> Kernel.round()
       _ ->
         0
     end
