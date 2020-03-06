@@ -44,7 +44,7 @@ defmodule Ethereum.Transport do
           ethereum_port = case System.get_env("ETHEREUM_PORT") do
             nil ->
               # Logger.error "ETHEREUM_PORT ENVIRONMENT VARIABLE NOT SET. Using 8501"
-              "8501"
+              "8545"
             port ->
               # Logger.info "ETHEREUM_PORT ENVIRONMENT VARIABLE SET. Using #{port}"
               port
@@ -53,7 +53,7 @@ defmodule Ethereum.Transport do
           # Requires --rpcvhosts=* on Eth Daemon - TODO: Clean up move PORT to run script
           daemon_host = "http://" <> ethereum_host <> ":" <> ethereum_port
           
-          resp = HTTPoison.post!(daemon_host, enc, [{"Content-Type", "application/json"}],[timeout: 150_000, recv_timeout: 150_000])
+          resp = HTTPoison.post!(daemon_host, enc, [{"Content-Type", "application/json"}],[timeout: 350_000, recv_timeout: 350_000])
 
           case Poison.decode(resp.body) do
             {:ok, body} ->
