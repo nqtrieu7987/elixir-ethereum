@@ -99,7 +99,7 @@ defmodule Ethereum.Transport do
               {"Api-Key", api_key},
               {"Api-Secret", api_secret}
             ],
-            [timeout: 150_000, recv_timeout: 150_000, hackney: [:insecure]])
+            [timeout: timeout, recv_timeout: recv_timeout, hackney: [:insecure]])
 
           case Poison.decode(resp.body) do
             {:ok, body} ->
