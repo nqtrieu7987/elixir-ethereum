@@ -10,6 +10,27 @@ defmodule Ethereum.Eth do
 
 
   @doc """
+  Show best/highest block number
+    
+  ## Example:
+
+      iex> Ethereum.block_number()
+      {:ok, 3858216}
+
+  """
+  @spec block_number :: {:ok, integer} | {:error, String.t}
+  def block_number do
+    case __MODULE__.send("eth_blockNumber",[]) do
+      {:ok, block} ->
+        decoded_number = block
+          |> Hexate.to_integer
+        {:ok, decoded_number}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @doc """
   Get balance of Ethereum account by hash
 
   ## Example:
@@ -25,6 +46,19 @@ defmodule Ethereum.Eth do
         |> Hexate.to_integer
         |> Conversion.wei_to_eth
         {:ok, ether_val}
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+
+  @doc """
+  """
+  def eth_call(params) do
+    [h | t] = params
+    case Ethereum.Eth.send("eth_call", [h, "latest"], false) do
+      {:ok, result} ->
+        {:ok, result}
       {:error, reason} ->
         {:error, reason}
     end
@@ -225,26 +259,6 @@ defmodule Ethereum.Eth do
   end
 
 
-  @doc """
-  Show best/highest block number
-    
-  ## Example:
-
-      iex> Ethereum.block_number()
-      {:ok, 3858216}
-
-  """
-  @spec block_number :: {:ok, integer} | {:error, String.t}
-  def block_number do
-    case __MODULE__.send("eth_blockNumber",[]) do
-      {:ok, block} ->
-        decoded_number = block
-          |> Hexate.to_integer
-        {:ok, decoded_number}
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
 
 
   @doc """
@@ -375,19 +389,9 @@ defmodule Ethereum.Eth do
     end
   end
 
-  @doc """
-  """
-  def eth_call(params) do
-    [h | t] = params
-    case Ethereum.Eth.send("eth_call", [h, "latest"], false) do
-      {:ok, result} ->
-        {:ok, result}
-      {:error, reason} ->
-        {:error, reason}
-    end
-  end
 
   @doc """
+
   """
   def eth_send_transaction(params) do
     [h | t] = params

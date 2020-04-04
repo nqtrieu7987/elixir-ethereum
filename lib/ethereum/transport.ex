@@ -50,20 +50,71 @@ defmodule Ethereum.Transport do
               port
           end
 
+    
+          api_key = case System.get_env("ETHEREUM_API_KEY") do
+            nil ->
+              # Logger.error "ETHEREUM_API_KEY ENVIRONMENT VARIABLE NOT SET. Using 0x"
+              "0x"
+            k ->
+              # Logger.info "ETHEREUM_API_KEY ENVIRONMENT VARIABLE SET. Using #{k}"
+              k
+          end
+
+          api_secret = case System.get_env("ETHEREUM_API_SECRET") do
+            nil ->
+              # Logger.error "ETHEREUM_API_SECRET ENVIRONMENT VARIABLE NOT SET. Using 0x"
+              "0x"
+            s ->
+              # Logger.info "ETHEREUM_API_SECRET ENVIRONMENT VARIABLE SET. Using #{s}"
+              s
+          end
+
+          timeout = case System.get_env("ETHEREUM_API_TIMEOUT") do
+            nil ->
+              # Logger.error "ETHEREUM_API_TIMEOUT ENVIRONMENT VARIABLE NOT SET. Using 350_000"
+              350_000
+            t ->
+              # Logger.info "ETHEREUM_API_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
+              t
+          end
+
+          rcv_timeout = case System.get_env("ETHEREUM_API_RECV_TIMEOUT") do
+            nil ->
+              # Logger.error "ETHEREUM_API_RECV_TIMEOUT ENVIRONMENT VARIABLE NOT SET. Using 350_000"
+              350_000
+            t ->
+              # Logger.info "ETHEREUM_API_RECV_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
+              t
+          end
+
           # Requires --rpcvhosts=* on Eth Daemon - TODO: Clean up move PORT to run script
-          daemon_host = "http://" <> ethereum_host <> ":" <> ethereum_port
+          daemon_host = case System.get_env("ETHEREUM_USE_SSL") do
+            "true" -> "https://" <> ethereum_host <> ":" <> ethereum_port
+            _ -> "http://" <> ethereum_host <> ":" <> ethereum_port
+          end
           
-          resp = HTTPoison.post!(daemon_host, enc, [{"Content-Type", "application/json"}],[timeout: 350_000, recv_timeout: 350_000])
+          resp = 
+            HTTPoison.post!(daemon_host, enc, [
+              {"Content-Type", "application/json"},
+              {"Api-Key", api_key},
+              {"Api-Secret", api_secret}
+            ],
+            [timeout: 150_000, recv_timeout: 150_000, hackney: [:insecure]])
 
           case Poison.decode(resp.body) do
             {:ok, body} ->
               case decode do
-                true -> {:ok, unhex(body["result"])}
-                false -> {:ok, body["result"]}
+                true -> 
+                  # Logger.warn "resp.body // decode true: #{inspect body}"
+                  {:ok, unhex(body["result"])}
+                false -> 
+                  # Logger.warn "resp.body // decode false: #{inspect body}"
+                  {:ok, body["result"]}
               end
             _ ->
               {:error, "bad_response"}
           end
+
         end
   
         # @doc """
