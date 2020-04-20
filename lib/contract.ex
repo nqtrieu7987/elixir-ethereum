@@ -461,6 +461,7 @@ defmodule Ethereum.Contract do
       event_attributes =
         get_event_attributes(state, filter_info[:contract_name], filter_info[:event_name])
       {:ok, logs} = Ethereum.get_filter_logs("0x" <> filter_id)
+      IEx.pry
       Logger.warn "handle_call({:get_filter_logs)"
       formatted_logs =
         if logs != [] do
