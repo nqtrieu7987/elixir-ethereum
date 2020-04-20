@@ -77,7 +77,7 @@ defmodule Ethereum do
   defdelegate reformat_abi(abi), to: ABI
   defdelegate abi_method_signature(abi, name), to: ABI, as: :method_signature
   defdelegate encode_abi_event(signature), to: ABI, as: :encode_event
-  defdelegate encode_abi_data(signature), to: ABI, as: :encode_data
+  defdelegate encode_abi_data(types_signature, data), to: ABI, as: :encode_data
   defdelegate encode_abi_options(options, keys), to: ABI, as: :encode_options
   defdelegate encode_abi_option(value), to: ABI, as: :encode_option
   defdelegate encode_abi_method_call(abi, name, input), to: ABI, as: :encode_method_call
