@@ -72,7 +72,8 @@ defmodule Ethereum.Contract do
     def get_filter_logs(filter_id) do
       GenServer.call(
         ContractManager,
-        {:get_filter_logs, filter_id}
+        {:get_filter_logs, filter_id},
+        100_000
       )
     end
 
