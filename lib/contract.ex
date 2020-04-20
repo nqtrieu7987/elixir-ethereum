@@ -418,6 +418,7 @@ defmodule Ethereum.Contract do
     #   Map.put(log, "data", new_data)
     # end
 
+    
     def handle_call({:filter, {contract_name, event_name, event_data}}, _from, state) do
       contract_info = state[contract_name]
 
@@ -426,14 +427,14 @@ defmodule Ethereum.Contract do
       topic_names = contract_info[:events][event_signature][:topic_names]
 
       topics = filter_topics_helper(event_signature, event_data, topic_types, topic_names)
-
+      IEx.pry
       payload =
         Map.merge(
           %{address: contract_info[:address], topics: topics},
           event_data_format_helper(event_data)
         )
       Logger.warn "Event payload #{inspect payload}"
-      
+      IEx.pry
       {:ok, filter_id} = Ethereum.new_filter(payload)
 
       {:reply, {:ok, filter_id},
