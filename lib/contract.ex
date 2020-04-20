@@ -432,7 +432,7 @@ defmodule Ethereum.Contract do
           event_data_format_helper(event_data)
         )
       Logger.warn "Event payload #{inspect payload}"
-      
+      IEx.pry
       {:ok, filter_id} = Ethereum.new_filter(payload)
 
       {:reply, {:ok, filter_id},
