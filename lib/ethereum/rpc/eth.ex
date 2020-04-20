@@ -304,6 +304,26 @@ defmodule Ethereum.Eth do
     end
   end
 
+
+@doc """
+  Get logs for EXISTING filter ID
+    
+  ## Example:
+
+      iex> Perkle.get_filter_logs(filter_hash)
+      {:ok, 3858216}
+
+"""
+@spec get_filter_logs(binary()) :: {:ok, binary()} | {:error, String.t}
+def get_filter_logs(hash) do
+  case __MODULE__.send("eth_getFilterLogs",[hash]) do
+    {:ok, logs} ->
+      {:ok, logs}
+    {:error, reason} ->
+      {:error, reason}
+  end
+end
+
 @doc """
   Show transaction for hash
     
