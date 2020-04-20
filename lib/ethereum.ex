@@ -89,7 +89,6 @@ defmodule Ethereum do
   defdelegate encode_abi_method_call(abi, name, input), to: ABI, as: :encode_method_call
   defdelegate decode_abi_data(types_signature, data), to: ABI, as: :decode_data
   defdelegate decode_abi_output(abi, name, output), to: ABI, as: :decode_output
-  defdelegate decode_abi_event(data, signature), to: ABI, as: :decode_event
   defdelegate abi_keys_to_decimal(map, keys), to: ABI, as: :keys_to_decimal
   
 end
