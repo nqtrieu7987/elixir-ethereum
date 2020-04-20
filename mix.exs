@@ -42,7 +42,7 @@ defmodule Ethereum.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.3.1"},
+      {:httpoison, "~> 1.6.1"},
       {:poison, "~> 3.0"},
       {:hexate,  ">= 0.6.0"},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},

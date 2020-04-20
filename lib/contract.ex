@@ -107,6 +107,7 @@ defmodule Ethereum.Contract do
     end
 
     defp init_events(abi) do
+      IEx.pry
       events =
         Enum.filter(abi, fn {_, v} ->
           v["type"] == "event"
