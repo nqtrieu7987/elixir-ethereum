@@ -324,11 +324,9 @@ defmodule Ethereum.Contract do
           if Enum.member?(["latest", "earliest", "pending"], event_data[key]) do
             event_data[key]
           else
-            "0x" <>
-              # (Ethereum.encode_abi_data("(uint256)", [event_data[key]]) |> Base.encode16(case: :lower))
-              Ethereum.to_hex(event_data[key])
+            # (Ethereum.encode_abi_data("(uint256)", [event_data[key]]) |> Base.encode16(case: :lower))
+            Ethereum.to_hex(event_data[key])
           end
-
         Map.put(event_data, key, new_param)
       else
         event_data
