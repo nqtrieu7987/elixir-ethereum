@@ -430,8 +430,9 @@ defmodule Ethereum.Contract do
           %{address: contract_info[:address], topics: topics},
           event_data_format_helper(event_data)
         )
-
-      filter_id = Ethereum.new_filter(payload)
+      Logger.warn "Event payload #{inspect payload}"
+      
+      {:ok, filter_id} = Ethereum.new_filter(payload)
 
       {:reply, {:ok, filter_id},
        Map.put(
