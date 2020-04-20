@@ -361,27 +361,29 @@ defmodule Ethereum.Contract do
     end
 
     defp format_log_data(log, event_attributes) do
-      
+  
       non_indexed_fields =
         extract_non_indexed_fields(
           Map.get(log, "data"),
           event_attributes[:non_indexed_names],
           event_attributes[:signature]
         )
-  
+        
       indexed_fields =
         if length(log["topics"]) > 1 do
           [_head | tail] = log["topics"]
           decoded_topics =
             Enum.map(0..(length(tail) - 1), fn i ->
+              IEx.pry
               topic_type = Enum.at(event_attributes[:topic_types], i)
               topic_data = Enum.at(tail, i)
               case topic_type do
                 "(address)" -> 
-                  Perkle.unhex(topic_data)
-                  |> Perkle.to_hex()
+                  IEx.pry
+                  Ethereum.unhex(topic_data)
+                  |> Ethereum.to_hex()
                 other -> 
-                  {decoded} = Perkle.decode_abi_data(topic_type, topic_data)
+                  {decoded} = Ethereum.decode_abi_data(topic_type, topic_data)
                   decoded
               end
             end)
@@ -394,39 +396,6 @@ defmodule Ethereum.Contract do
 
       Map.put(log, "data", new_data)
     end
-
-    # defp format_log_data(log, event_attributes) do
-    #   non_indexed_fields =
-    #     extract_non_indexed_fields(
-    #       Map.get(log, "data"),
-    #       event_attributes[:non_indexed_names],
-    #       event_attributes[:signature]
-    #     )
-
-    #   indexed_fields =
-    #     if length(log["topics"]) > 1 do
-    #       [_head | tail] = log["topics"]
-
-    #       decoded_topics =
-    #         Enum.map(0..(length(tail) - 1), fn i ->
-    #           topic_type = Enum.at(event_attributes[:topic_types], i)
-    #           topic_data = Enum.at(tail, i)
-
-    #           {decoded} = Ethereum.decode_abi_data(topic_type, topic_data)
-
-    #           decoded
-    #         end)
-
-    #       Enum.zip(event_attributes[:topic_names], decoded_topics) |> Enum.into(%{})
-    #     else
-    #       %{}
-    #     end
-
-    #   new_data = Map.merge(indexed_fields, non_indexed_fields)
-
-    #   Map.put(log, "data", new_data)
-    # end
-
     
     def handle_call({:filter, {contract_name, event_name, event_data}}, _from, state) do
       contract_info = state[contract_name]
@@ -461,7 +430,7 @@ defmodule Ethereum.Contract do
       event_attributes =
         get_event_attributes(state, filter_info[:contract_name], filter_info[:event_name])
       {:ok, logs} = Ethereum.get_filter_logs("0x" <> filter_id)
-      IEx.pry
+   
       Logger.warn "handle_call({:get_filter_logs)"
       formatted_logs =
         if logs != [] do
@@ -473,7 +442,7 @@ defmodule Ethereum.Contract do
                     "blockNumber",
                     "logIndex",
                     "transactionIndex",
-                    "transactionLogIndex"
+                    # "transactionLogIndex"
                   ]),
                   format_log_data(log, event_attributes)
                 ],
