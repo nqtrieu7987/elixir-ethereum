@@ -75,7 +75,7 @@ defmodule Ethereum.Transport do
               1_350_000
             t ->
               # Logger.info "ETHEREUM_API_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
-              1_350_000
+              t
           end
 
           recv_timeout = case System.get_env("ETHEREUM_API_RECV_TIMEOUT") do
@@ -84,7 +84,7 @@ defmodule Ethereum.Transport do
               1_350_000
             t ->
               # Logger.info "ETHEREUM_API_RECV_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
-              1_350_000
+              t
           end
 
           # Requires --rpcvhosts=* on Eth Daemon - TODO: Clean up move PORT to run script
