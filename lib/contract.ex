@@ -285,11 +285,13 @@ defmodule Ethereum.Contract do
                 topic_type = Enum.at(topic_types, i)
 
                 Enum.map(topic, fn t ->
-                  "0x" <> (Ethereum.encode_abi_data(topic_type, [t]) |> Base.encode16(case: :lower))
+                  # "0x" <> (Ethereum.encode_abi_data(topic_type, [t]) |> Base.encode16(case: :lower))
+                  Ethereum.encode_abi_data(topic_type, [t]) |> Base.encode16(case: :lower)
                 end)
               else
                 topic_type = Enum.at(topic_types, i)
-                "0x" <> (Ethereum.encode_abi_data(topic_type, [topic]) |> Base.encode16(case: :lower))
+                # "0x" <> (Ethereum.encode_abi_data(topic_type, [topic]) |> Base.encode16(case: :lower))
+                Ethereum.encode_abi_data(topic_type, [topic]) |> Base.encode16(case: :lower)
               end
             else
               topic
@@ -432,7 +434,7 @@ defmodule Ethereum.Contract do
           event_data_format_helper(event_data)
         )
       Logger.warn "Event payload #{inspect payload}"
-      IEx.pry
+      
       {:ok, filter_id} = Ethereum.new_filter(payload)
 
       {:reply, {:ok, filter_id},
