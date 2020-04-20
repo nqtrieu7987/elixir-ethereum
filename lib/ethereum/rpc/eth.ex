@@ -353,6 +353,7 @@ defmodule Ethereum.Eth do
   """
   @spec new_filter(map()) :: {:ok, binary()} | {:error, String.t}
   def new_filter(map) do
+    IEx.pry
     case __MODULE__.send("eth_newFilter",[map]) do
       {:ok, res} ->
         Logger.warn "Ethereum.Eth.new_filter" 
