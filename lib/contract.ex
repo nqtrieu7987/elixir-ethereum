@@ -374,12 +374,10 @@ defmodule Ethereum.Contract do
           [_head | tail] = log["topics"]
           decoded_topics =
             Enum.map(0..(length(tail) - 1), fn i ->
-              IEx.pry
               topic_type = Enum.at(event_attributes[:topic_types], i)
               topic_data = Enum.at(tail, i)
               case topic_type do
                 "(address)" -> 
-                  IEx.pry
                   Ethereum.unhex(topic_data)
                   |> Ethereum.to_hex()
                 other -> 
