@@ -72,7 +72,7 @@ defmodule Ethereum.Transport do
           timeout = case System.get_env("ETHEREUM_API_TIMEOUT") do
             nil ->
               # Logger.error "ETHEREUM_API_TIMEOUT ENVIRONMENT VARIABLE NOT SET. Using 350_000"
-              350_000
+              1_350_000
             t ->
               # Logger.info "ETHEREUM_API_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
               t
@@ -81,7 +81,7 @@ defmodule Ethereum.Transport do
           recv_timeout = case System.get_env("ETHEREUM_API_RECV_TIMEOUT") do
             nil ->
               # Logger.error "ETHEREUM_API_RECV_TIMEOUT ENVIRONMENT VARIABLE NOT SET. Using 350_000"
-              350_000
+              1_350_000
             t ->
               # Logger.info "ETHEREUM_API_RECV_TIMEOUT ENVIRONMENT VARIABLE SET. Using #{t}"
               t
