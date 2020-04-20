@@ -1,5 +1,5 @@
 defmodule Ethereum.ABI do
-  
+  require IEx
   @spec load_abi(binary()) :: list() | {:error, atom()}
   @doc "Loads the abi at the file path and reformats it to a map"
   def load_abi(file_path) do
@@ -28,6 +28,7 @@ defmodule Ethereum.ABI do
   @spec encode_data(binary(), list()) :: binary()
   @doc "Encodes data into Ethereum hex string based on types signature"
   def encode_data(types_signature, data) do
+    IEx.pry
     ABI.TypeEncoder.encode_raw(
       [List.to_tuple(data)],
       ABI.FunctionSelector.decode_raw(types_signature)
