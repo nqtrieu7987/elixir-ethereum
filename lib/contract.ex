@@ -312,7 +312,6 @@ defmodule Ethereum.Contract do
           else
             Ethereum.encode_abi_data("(uint256)", [event_data[:fromBlock]])
           end
-
         Map.put(event_data, :fromBlock, new_from_block)
       else
         event_data
