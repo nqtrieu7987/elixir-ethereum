@@ -357,6 +357,7 @@ defmodule Ethereum.Contract do
     end
 
     defp extract_non_indexed_fields(data, names, signature) do
+      IEx.pry
       Enum.zip(names, Ethereum.decode_abi_event(data, signature)) |> Enum.into(%{})
     end
 

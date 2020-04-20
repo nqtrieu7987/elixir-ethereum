@@ -50,7 +50,8 @@ defmodule Ethereum do
   ## Web3 Namespace Functions
   defdelegate client_version(), to: Web3
   defdelegate sha3(str), to: Web3
-  
+  defdelegate decode_abi_event(data, signature), to: Web3, as: :decode_event
+
   ## Net Namespace Functions
   defdelegate version(), to: Net
   defdelegate peer_count(), to: Net

@@ -25,6 +25,22 @@ defmodule Ethereum.Web3 do
   end
 
 
+
+  @spec decode_event(binary(), binary()) :: any()
+  @doc "Decodes event based on given data and provided signature"
+  def decode_event(data, signature) do
+    formatted_data =
+      data
+      |> String.slice(2..-1)
+      |> Base.decode16!(case: :lower)
+      
+    fs = ABI.FunctionSelector.decode(signature)
+
+    ABI.TypeDecoder.decode(formatted_data, fs)
+  end
+  
+  
+
   @doc """
 
   Creates a sha3 hash of a string.
