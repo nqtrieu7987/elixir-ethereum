@@ -67,6 +67,15 @@ defmodule Ethereum.Contract do
       )
     end
 
+    @spec get_filter_logs(binary()) :: {:ok, list()}
+    @doc "Using saved information related to the filter id, event logs are formatted properly"
+    def get_filter_logs(filter_id) do
+      GenServer.call(
+        ContractManager,
+        {:get_filter_logs, filter_id}
+      )
+    end
+
     @spec get_filter_changes(binary()) :: {:ok, list()}
     @doc "Using saved information related to the filter id, event logs are formatted properly"
     def get_filter_changes(filter_id) do
