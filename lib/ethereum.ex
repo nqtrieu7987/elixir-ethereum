@@ -18,10 +18,6 @@ defmodule Ethereum do
 
   ## Eth Namespace Functions
   # ALPHA AND REFERENCE
-  defdelegate accounts(), to: Eth
-  defdelegate block_number(), to: Eth
-  defdelegate eth_call(params), to: Eth
-
   defdelegate get_transaction_by_hash(hash), to: Eth
   defdelegate get_transaction_receipt_by_hash(hash), to: Eth
   defdelegate get_block_by_hash(hash, full_txns), to: Eth
@@ -33,6 +29,15 @@ defmodule Ethereum do
   defdelegate mining(), to: Eth
   defdelegate hashrate(), to: Eth
   defdelegate gas_price(), to: Eth
+  defdelegate accounts(), to: Eth
+  defdelegate block_number(), to: Eth
+  defdelegate transaction_count(hash), to: Eth
+  defdelegate get_filter_changes(hash), to: Eth
+  defdelegate get_filter_logs(hash), to: Eth
+  defdelegate eth_call(params), to: Eth
+  defdelegate eth_send(transaction), to: Eth, as: :eth_send_transaction
+  defdelegate uninstall_filter(id), to: Eth
+  defdelegate new_filter(map), to: Eth
   
   
   defdelegate transaction_count(hash), to: Eth
