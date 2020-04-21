@@ -12,6 +12,11 @@ defmodule Ethereum.Conversion do
     wei / @units.eth
   end
 
+  @spec format_units(integer, integer) :: float
+  def format_units(atomic_units, divisor) do
+    atomic_units / divisor
+  end
+  
   @spec to_wei(amount :: integer, denomination :: atom) :: integer()
   def to_wei(amount, denomination) do
     case denomination do
