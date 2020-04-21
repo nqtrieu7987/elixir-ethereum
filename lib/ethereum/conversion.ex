@@ -13,7 +13,8 @@ defmodule Ethereum.Conversion do
   end
 
   @spec format_units(integer, integer) :: float
-  def format_units(atomic_units, divisor) do
+  def format_units(atomic_units, decimals) do
+    divisor = :math.pow(10, decimals)
     atomic_units / divisor
   end
   
